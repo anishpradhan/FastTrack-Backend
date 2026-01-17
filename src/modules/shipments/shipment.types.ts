@@ -1,4 +1,4 @@
-export type ShipmentStatus = 'pending' | 'in_transit' | 'delivered' | 'failed'
+export type ShipmentStatus = 'pending' | 'in_transit' | 'delivered' | 'failed';
 
 export interface Shipment {
     id: string; //UUID
@@ -6,5 +6,12 @@ export interface Shipment {
     customerName: string;
     destination: string;
     status: ShipmentStatus;
-    lastSyncedAt?: Date 
+    lastSyncedAt?: Date ;
+    createdAt: Date ;
+}
+
+export interface CreateShipmentInput {
+    orderId: string;
+    customerName: string;
+    destination: string;
 }
