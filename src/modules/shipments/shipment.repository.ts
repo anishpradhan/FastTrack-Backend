@@ -45,7 +45,6 @@ export const ShipmentRepository = {
             shipmentData.destination,
             shipmentData.status
         ];
-        console.log(query, values);
         const result = await pool.query(query, values);
         return mapRowToShipment(result.rows[0]);
     },
