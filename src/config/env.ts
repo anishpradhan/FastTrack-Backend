@@ -11,9 +11,9 @@ dotenv.config({ path: join(__dirname, '../../.env') });
 interface Env {
     // PORT: number;
     DATABASE_URL: string;
-    // CARRIERS_API_BASE_URL: string;
-    // SYNC_INTERVAL_MINUTES: number;
-    // LOG_LEVEL: 'debug' | 'info' | 'warn' | 'error';
+    CARRIERS_API_BASE_URL: string;
+    SYNC_INTERVAL_MINUTES: number;
+    LOG_LEVEL: 'debug' | 'info' | 'warn' | 'error';
 }
 
 function getEnvVar(key: string, defaultValue?: string): string {
@@ -27,7 +27,7 @@ function getEnvVar(key: string, defaultValue?: string): string {
 export const env: Env = {
     // PORT: parseInt(getEnvVar('PORT', '3000')),
     DATABASE_URL: getEnvVar('DATABASE_URL'),
-    // CARRIERS_API_BASE_URL: getEnvVar('CARRIERS_API_BASE_URL'),
-    // SYNC_INTERVAL_MINUTES: parseInt(getEnvVar('SYNC_INTERVAL_MINUTES', '5')),
-    // LOG_LEVEL: (getEnvVar('LOG_LEVEL', 'info') as Env['LOG_LEVEL'])
+    CARRIERS_API_BASE_URL: getEnvVar('CARRIERS_API_BASE_URL'),
+    SYNC_INTERVAL_MINUTES: parseInt(getEnvVar('SYNC_INTERVAL_MINUTES', '5')),
+    LOG_LEVEL: (getEnvVar('LOG_LEVEL', 'info') as Env['LOG_LEVEL'])
 }
