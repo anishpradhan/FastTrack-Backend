@@ -9,7 +9,6 @@ const __dirname = dirname(__filename);
 dotenv.config({ path: join(__dirname, '../../.env') });
 
 interface Env {
-    // PORT: number;
     DATABASE_URL: string;
     CARRIERS_API_BASE_URL: string;
     SYNC_INTERVAL_MINUTES: number;
@@ -25,7 +24,6 @@ function getEnvVar(key: string, defaultValue?: string): string {
 }
 
 export const env: Env = {
-    // PORT: parseInt(getEnvVar('PORT', '3000')),
     DATABASE_URL: getEnvVar('DATABASE_URL'),
     CARRIERS_API_BASE_URL: getEnvVar('CARRIERS_API_BASE_URL'),
     SYNC_INTERVAL_MINUTES: parseInt(getEnvVar('SYNC_INTERVAL_MINUTES', '5')),

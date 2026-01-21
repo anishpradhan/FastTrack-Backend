@@ -8,10 +8,11 @@ type RetryOptions = {
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 const jitter = (ms: number) => {
-  const j = ms * 0.2;
-  return Math.max(0, ms + (Math.random() * 2 - 1) * j);
+    const j = ms * 0.2;
+    return Math.max(0, ms + (Math.random() * 2 - 1) * j);
 };
 
+// Generic retry function with exponential backoff 
 export async function retry<T>(
     fn: (attempt: number) => Promise<T>,
     opts: RetryOptions,
@@ -28,10 +29,11 @@ export async function retry<T>(
                 throw err;
             }
             const retryAfter = getRetryAfterMs?.(err);
-            const waitTime = retryAfter !== null ? retryAfter: jitter(Math.min(delay,opts.maxDelayMs));
+            const waitTime = retryAfter !== null ? retryAfter : jitter(Math.min(delay, opts.maxDelayMs));
             await sleep(waitTime)
 
             attempt++
             delay = Math.min(opts.maxDelayMs, delay * opts.factor);
         }
-    }}
+    }
+}

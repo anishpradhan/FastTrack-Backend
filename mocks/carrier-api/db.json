@@ -1,37 +1,12 @@
 {
   "shipments": [
     {
-      "id": "3c673ca7-3f2b-4324-a7ca-e9b67e13627f",
+      "id": "d3c14f87-e11b-4fe2-bed4-356438cadb98",
       "orderId": "100",
-      "customerName": "Bhisma Pitama",
-      "destination": "Bharat",
-      "status": "failed",
-      "createdAt": "2026-01-19T15:10:50.938Z",
-      "updatedAt": "2026-01-19T19:28:15.144Z"
-    },
-    {
-      "id": "31d1af3b-b4ae-4786-b944-5b10849d5a1a",
-      "orderId": "200",
-      "destination": "Maithili",
-      "status": "delivered",
-      "createdAt": "2026-01-19T15:15:50.125Z",
-      "updatedAt": "2026-01-19T18:48:45.682Z"
-    },
-    {
-      "id": "ca538278-30c9-4c05-b3cb-9c7293629177",
-      "orderId": "300",
-      "destination": "Baikuntha",
-      "status": "delivered",
-      "createdAt": "2026-01-19T19:58:30.524Z",
-      "updatedAt": "2026-01-19T20:01:16.095Z"
-    },
-    {
-      "id": "a3fa519d-4de3-4b02-a5c2-27752f9317dd",
-      "orderId": "400",
-      "destination": "Jhapa-5",
-      "status": "delivered",
-      "createdAt": "2026-01-19T21:20:24.265Z",
-      "updatedAt": "2026-01-19T21:24:22.447Z"
+      "destination": "Texas",
+      "status": "in_transit",
+      "createdAt": "2026-01-21T22:35:12.410Z",
+      "updatedAt": "2026-01-21T22:35:41.864Z"
     }
   ]
 }

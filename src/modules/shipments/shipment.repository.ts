@@ -1,10 +1,7 @@
 
 import { Pool } from "pg";
 import { env } from "../../config/env";
-
 import { Shipment, ShipmentStatus } from "./shipment.types";
-
-
 
 // Setup Postgres connection pool
 const pool = new Pool({
@@ -51,7 +48,6 @@ export const ShipmentRepository = {
     async findById(id: string): Promise<Shipment | null> {
         let query = 'SELECT order_id, customer_name, status FROM shipments WHERE id = $1';
         const values = [id];
-        console.log(query, values)
         const result = await pool.query(query, values);
         return mapRowToShipment(result.rows[0]) || null
     },
@@ -99,6 +95,7 @@ export const ShipmentRepository = {
         return result.rowCount ? mapRowToShipment(result.rows[0]) : null
     },
 
+    // Get shipments with status 'pending' or 'in_transit' for syncing
     async listActiveForSync(limit = 500): Promise<Shipment[]>{
         const safeLimit = Math.max(1, Math.min(1000, limit))
         

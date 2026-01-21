@@ -14,9 +14,7 @@ server.use((req, res, next) => setTimeout(next, 300));
 server.get('/carrier/shipments/:orderId', (req, res) => {
     const orderId = req.params.orderId
     const db = router.db
-
     const deliveryStatus = db.get("shipments").find({ orderId }).value()
-
     return res.status(200).json(deliveryStatus)
 
 })
