@@ -50,12 +50,11 @@ npm run db:migrate
 
 ##### Option B: Local Postgres
 
-  Create a database named "fasttrack" and update DATABASE_URL in .env accordingly. 
-<br>
-- Create databaes schema:
-  ```bash
-  psql "$DATABASE_URL" -f migrations/001_init.sql 
-  ```
+- Create a database named "fasttrack" and update DATABASE_URL in .env accordingly. 
+- Create database schema:
+```bash
+psql "$DATABASE_URL" -f migrations/001_init.sql 
+```
 
 
 ### Development
