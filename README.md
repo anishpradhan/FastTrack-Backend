@@ -5,7 +5,7 @@ A Node.js backend service for managing shipment tracking with automatic synchron
 ## Setup Instructions
 
 ### Prerequisites
-- Node.js 24+ 
+- Node.js (>=24) 
 - PostgreSQL 13+
 - npm or yarn
 
@@ -13,6 +13,14 @@ A Node.js backend service for managing shipment tracking with automatic synchron
 
 1. **Clone and install dependencies:**
 ```bash
+git clone https://github.com/anishpradhan/FastTrack-Backend.git
+
+cd fasttrack-backend
+
+npm install
+
+cd mocks/carrier-api
+
 npm install
 ```
 
@@ -20,20 +28,34 @@ npm install
 Create a `.env` file in the root directory:
 ```env
 # Database
-DATABASE_URL=postgresql://user:password@localhost:5432/fasttrack
+DATABASE_URL=postgresql://postgres:postgres@localhost:5432/fasttrack
 
 # Carrier API
 CARRIER_API_BASE_URL=http://localhost:4001
 
 # Sync Job
 SYNC_INTERVAL_MINUTES=1
-
-
-3. **Setup database:**
-```bash
-# Run migrations (if using Prisma)
-npx prisma migrate dev
 ```
+
+3. **Setup PostgreSQL Database:**
+   
+##### Option A: Docker (recommended)
+```bash
+docker compose up -d
+```
+- Create database schema:
+```bash
+npm run db:migrate
+```
+
+##### Option B: Local Postgres
+
+- Create a database named "fasttrack" and update DATABASE_URL in .env accordingly. 
+- Create database schema:
+```bash
+psql "$DATABASE_URL" -f migrations/001_init.sql 
+```
+
 
 ### Development
 
@@ -46,7 +68,7 @@ This runs:
 - Main API on `http://localhost:3000`
 - Mock carrier API on `http://localhost:4001`
 
-Individual servers:
+If you want to run individual servers:
 ```bash
 npm run dev:api      # Only main API
 npm run dev:carrier  # Only mock carrier API
