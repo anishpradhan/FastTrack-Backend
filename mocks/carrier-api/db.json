@@ -1,12 +1,12 @@
 {
   "shipments": [
     {
-      "id": "d3c14f87-e11b-4fe2-bed4-356438cadb98",
+      "id": "38935b14-cdeb-4ce0-ac53-947e0842c96f",
       "orderId": "100",
       "destination": "Texas",
-      "status": "in_transit",
-      "createdAt": "2026-01-21T22:35:12.410Z",
-      "updatedAt": "2026-01-21T22:35:41.864Z"
+      "status": "delivered",
+      "createdAt": "2026-01-22T00:14:24.420Z",
+      "updatedAt": "2026-01-22T00:15:19.971Z"
     }
   ]
 }

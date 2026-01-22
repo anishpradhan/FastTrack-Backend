@@ -7,6 +7,7 @@
     "dev": "concurrently \"npm run dev:api\" \"npm run dev:carrier\"",
     "dev:api": "tsx watch src/server.ts",
     "dev:carrier": "cd mocks/carrier-api && npm run dev",
+    "db:migrate": "docker exec -i fasttrack-db psql -U postgres -d fasttrack -f /dev/stdin < migrations/001_init.sql",
     "build": "tsc",
     "start": "tsx src/server.ts",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
