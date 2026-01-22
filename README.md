@@ -124,6 +124,53 @@ src/
     └── retry.ts                    # Exponential backoff retry logic
 ```
 
+
+## API Endpoints
+
+### Create Shipment
+```bash
+POST /shipments
+Content-Type: application/json
+
+{
+  "orderId": "order_1",
+  "customerName": "Anish",
+  "destination": "Abu Dhabi, UAE"
+}
+```
+
+### List Shipments
+```bash
+GET http://localhost:3000/shipments
+
+GET http://localhost:3000/shipments?customerName=Anish
+
+GET http://localhost:3000/shipments?status=pending&skip=0&limit=10
+```
+
+### Get Shipment
+```bash
+GET http://localhost:3000/shipments/:id
+```
+
+## Carrier API Endpoints
+
+### Get Shipment
+```bash
+GET http://localhost:4001/carrier/shipments/order_1
+```
+
+### Update Shipment Status
+```bash
+PATCH http://localhost:4001/carrier/shipments/order_1
+Content-Type: application/json
+
+{
+   "status": "in_transit"
+}
+```
+
+
 ### Core Components
 
 #### Shipment Service (`shipment.service.ts`)
@@ -164,10 +211,11 @@ Carrier Client (carrier.client.ts) ← → Carrier API (HTTP)
 HTTP Response
 ```
 
+
 ## Design Choices
 
 ### 1. **Service-Repository Pattern**
-- Clean separation of concerns
+- Clean separation in layers
 - Business logic in service layer
 - Data access in repository layer
 - Easier testing and maintenance
@@ -179,9 +227,8 @@ const VALID_STATUSES: ShipmentStatus[] = ["pending", "in_transit", "delivered", 
 // Maps invalid carrier statuses to 'failed'
 const mapped = VALID_STATUSES.includes(carrierStatus) ? carrierStatus : 'failed';
 ```
-- Prevents corrupted status values in database
-- Graceful degradation for unknown statuses
-- Immutable status enum ensures type safety
+- Prevents invalid status values in database
+- Ensures type safety
 
 ### 3. **Exponential Backoff with Jitter**
 ```typescript
@@ -209,11 +256,6 @@ const mapped = VALID_STATUSES.includes(carrierStatus) ? carrierStatus : 'failed'
 - Prevents hanging requests
 - Configurable timeout per carrier
 
-### 6. **Transaction Safety**
-- Status updates include timestamp
-- Tracks `lastSyncedAt` for audit trail
-- Creates shipment locally before carrier registration
-
 ## How to Run Synchronization
 
 ### Automatic Sync
@@ -236,23 +278,9 @@ The sync job:
 
 Trigger sync manually (if endpoint exposed):
 ```bash
-curl -X POST http://localhost:3000/shipments/sync
+http://localhost:3000/shipments/sync
 ```
 
-### Monitoring Sync
-
-Check sync logs:
-```bash
-# View real-time logs
-npm run dev:api
-
-# Output format:
-# [HH:MM:SS] INFO: Sync job started
-# [HH:MM:SS] DEBUG: Shipment status unchanged (id: shipment_1)
-# [HH:MM:SS] INFO: Shipment status updated (id: shipment_2, old: pending, new: in_transit)
-# [HH:MM:SS] ERROR: Failed to sync shipment (id: shipment_3, error: Network timeout)
-# [HH:MM:SS] INFO: Sync job finished (checked: 100, updated: 45, failed: 2, durationMs: 2345)
-```
 
 ### Testing Sync Logic
 
@@ -264,14 +292,9 @@ npm test -- shipment.sync.test.ts
 Test coverage includes:
 - ✓ Empty shipment lists
 - ✓ Status changes
-- ✓ Unchanged statuses (no-op)
+- ✓ Unchanged statuses
 - ✓ Invalid status mapping
-- ✓ API error handling
 - ✓ Missing orderId skipping
-- ✓ All valid status transitions
-- ✓ Mixed results (updates + errors)
-- ✓ Batch limit compliance
-- ✓ Error recovery
 
 ### Sync Configuration
 
@@ -291,47 +314,6 @@ const retryOpts = {
   maxDelayMs: 30000,    // Max delay
   factor: 2             // Exponential backoff multiplier
 };
-```
-
-### Troubleshooting Sync
-
-**Issue: Sync not running**
-- Check cron expression: `buildCronExpression(SYNC_INTERVAL_MINUTES)`
-- Verify `SYNC_INTERVAL_MINUTES` is 1-60
-- Check server logs for job startup message
-
-**Issue: Stuck in progress**
-- Check for error messages in logs
-- Look for unfinished previous sync (flag-based prevention)
-- Restart server to reset state
-
-**Issue: Shipments not updating**
-- Verify carrier API connectivity
-- Check retry logs for failed requests
-- Ensure shipments have valid `orderId`
-
-## API Endpoints
-
-### Create Shipment
-```bash
-POST /shipments
-Content-Type: application/json
-
-{
-  "orderId": "order_123",
-  "customerName": "John Doe",
-  "destination": "New York, NY"
-}
-```
-
-### List Shipments
-```bash
-GET /shipments?status=pending&skip=0&limit=10
-```
-
-### Get Shipment
-```bash
-GET /shipments/:id
 ```
 
 ## Technologies
