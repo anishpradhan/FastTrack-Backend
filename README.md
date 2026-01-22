@@ -15,7 +15,7 @@ A Node.js backend service for managing shipment tracking with automatic synchron
 ```bash
 git clone https://github.com/anishpradhan/FastTrack-Backend.git
 
-cd fasttrack-backend
+cd FastTrack-Backend
 
 npm install
 
@@ -28,10 +28,10 @@ npm install
 Create a `.env` file in the root directory:
 ```env
 # Database
-DATABASE_URL=postgresql://postgres:postgres@localhost:5432/fasttrack
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/fasttrack"
 
 # Carrier API
-CARRIER_API_BASE_URL=http://localhost:4001
+CARRIERS_API_BASE_URL="http://localhost:4001"
 
 # Sync Job
 SYNC_INTERVAL_MINUTES=1
